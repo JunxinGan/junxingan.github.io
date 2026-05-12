@@ -125,7 +125,6 @@ const projects = [
     media: [
       asset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/活动视频/廉平成片.mp4", "廉平成片", "video", "landscape"),
       asset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/活动视频/浩棋游园会.mp4", "浩棋游园会", "video", "landscape"),
-      asset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/活动视频/浩棋游园会2.mp4", "浩棋游园会竖版", "video", "portrait"),
       asset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/活动照片/廉平/微信图片_20260509012544_258_194.jpg", "廉平活动现场", "image", "landscape"),
       asset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/抖音制作/个人账号/抖音截图/阿甘有车了.png", "个人账号截图", "image", "portrait"),
     ],
@@ -398,6 +397,82 @@ const gallery = [
   { ...asset("Agan/个人简历/工作经历/青门CAFE&TAPROOM/照片/微信图片_20260509020723_266_194.jpg", "青门 CAFE&TAPROOM 04", "image", "square"), group: "cafe" },
 ];
 
+function photographyAsset(objectKey, group = "portrait") {
+  const filename = objectKey.split("/").pop().replace(/\.[^.]+$/, "");
+  return { ...asset(objectKey, filename, "image", "square"), group };
+}
+
+const additionalPhotography = [
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022612_281_194.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/DSC04576.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022640_290_194.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/DSC06389.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022832_302_194.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/DSC06777.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022627_285_194.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022605_279_194.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022517_274_194.png"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/DSC04886.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022704_295_194.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022632_287_194.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022636_289_194.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022850_305_194.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022812_299_194.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022658_294_194.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022643_291_194.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/DSC07153.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022440_272_194.png"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022712_296_194.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022608_280_194.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022853_306_194.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/DSC04855.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022624_284_194.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022629_286_194.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022601_278_194.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022722_297_194.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022348_269_194.png"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022615_282_194.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/DSC07167.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022619_283_194.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260428001409_234_194.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/DSC02633.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022634_288_194.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260428001410_235_194.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/DSC06221.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022844_304_194.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/DSC05884.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022839_303_194.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022544_276_194.png"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022501_273_194.png"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/DSC06194.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/DSC07076.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022327_268_194.png"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022818_300_194.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/DSC06746.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022826_301_194.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022651_293_194.jpg"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/微信图片_20260509022301_267_194.png"),
+  photographyAsset("Agan/个人简历/其他项目经历/写真拍摄/DSC06179.jpg"),
+  photographyAsset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/活动照片/廉平/微信图片_20260509012546_260_194.jpg", "event"),
+  photographyAsset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/活动照片/廉平/微信图片_20260509012948_262_194.jpg", "event"),
+  photographyAsset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/活动照片/廉平/微信图片_20260509012544_258_194.jpg", "event"),
+  photographyAsset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/活动照片/廉平/微信图片_20260509012545_259_194.jpg", "event"),
+  photographyAsset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/活动照片/浩棋复古游园会/DSC02338.jpg", "event"),
+  photographyAsset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/活动照片/浩棋复古游园会/DSC05253.jpg", "event"),
+  photographyAsset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/活动照片/浩棋复古游园会/DSC04612.jpg", "event"),
+  photographyAsset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/活动照片/浩棋复古游园会/DSC03433.jpg", "event"),
+  photographyAsset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/活动照片/浩棋复古游园会/DSC05032.jpg", "event"),
+  photographyAsset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/活动照片/浩棋复古游园会/DSC04253.jpg", "event"),
+  photographyAsset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/活动照片/浩棋复古游园会/DSC04650.jpg", "event"),
+  photographyAsset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/活动照片/浩棋复古游园会/DSC04323.jpg", "event"),
+  photographyAsset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/活动照片/浩棋复古游园会/DSC04390.jpg", "event"),
+];
+
+const photographyWall = uniqueMedia([
+  ...gallery.filter((item) => item.type === "image" && item.group !== "personal"),
+  ...additionalPhotography,
+]);
+
 const shortVideos = [
   asset("Agan/个人简历/其他项目经历/自媒体/纹发账号/视频案例/1.解决脱发最好的办法.mp4", "解决脱发最好的办法", "video", "portrait"),
   asset("Agan/个人简历/其他项目经历/自媒体/纹发账号/视频案例/2.杰森斯坦僧.mp4", "杰森斯坦僧", "video", "portrait"),
@@ -415,6 +490,52 @@ const shortVideos = [
   asset("Agan/个人简历/其他项目经历/自媒体/摄影账号/视频案例/孔孟茹.m4v", "孔孟茹", "video", "portrait"),
   asset("Agan/个人简历/工作经历/南京好享瑷高端婚礼策划有限公司/视频案例/自媒体/韩国新娘同款婚礼要花多少米？.mp4", "韩式婚礼预算选题", "video", "portrait"),
   asset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/抖音制作/个人账号/视频案例/日常更新.mp4", "阿甘有车了日常更新", "video", "portrait"),
+];
+
+const selfMediaGroups = [
+  {
+    id: "wedding-short",
+    title: "婚礼短视频",
+    summary: "婚礼 IP、备婚攻略和婚礼选题内容。",
+    media: [
+      asset("Agan/个人简历/工作经历/南京好享瑷高端婚礼策划有限公司/视频案例/自媒体/好享瑷1期.mp4", "好享瑷 1 期", "video", "portrait"),
+      asset("Agan/个人简历/工作经历/南京好享瑷高端婚礼策划有限公司/视频案例/自媒体/韩国新娘同款婚礼要花多少米？.mp4", "韩式婚礼预算选题", "video", "portrait"),
+      asset("Agan/个人简历/工作经历/南京好享瑷高端婚礼策划有限公司/视频案例/自媒体/韩国新娘点名要的韩式婚礼.mp4", "韩式婚礼选题", "video", "portrait"),
+      asset("Agan/个人简历/工作经历/南京好享瑷高端婚礼策划有限公司/视频案例/自媒体/备婚攻略（金银饰）.mp4", "备婚攻略", "video", "portrait"),
+      asset("Agan/个人简历/工作经历/南京好享瑷高端婚礼策划有限公司/视频案例/自媒体/备婚日常-家纺篇.mp4", "备婚日常-家纺篇", "video", "portrait"),
+    ],
+  },
+  {
+    id: "hairline-short",
+    title: "纹发短视频",
+    summary: "纹发、脱发、发际线垂直选题内容。",
+    media: shortVideos.filter((video) => video.ossObjectKey.includes("纹发账号")),
+  },
+  {
+    id: "event-short",
+    title: "活动短视频",
+    summary: "活动宣传、账号日常和现场内容发布素材。",
+    media: [
+      asset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/抖音制作/其余账号/视频案例/活动宣传.m4v", "活动宣传", "video", "portrait"),
+      asset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/抖音制作/其余账号/视频案例/活动宣传1.mp4", "活动宣传 1", "video", "portrait"),
+      asset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/抖音制作/其余账号/视频案例/日常拍摄.m4v", "日常拍摄", "video", "portrait"),
+    ],
+  },
+  {
+    id: "motor-short",
+    title: "机车短视频",
+    summary: "个人账号“阿甘有车了”短视频内容。",
+    media: [
+      asset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/抖音制作/个人账号/视频案例/日常更新.mp4", "阿甘有车了日常更新", "video", "portrait"),
+      asset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/活动视频/浩棋游园会2.mp4", "浩棋游园会竖版", "video", "portrait"),
+    ],
+  },
+  {
+    id: "photo-short",
+    title: "摄影短视频",
+    summary: "摄影账号人物短视频内容。",
+    media: shortVideos.filter((video) => video.ossObjectKey.includes("摄影账号")),
+  },
 ];
 
 const portfolioCategoryPages = [
@@ -483,10 +604,10 @@ function projectsForCategory(category) {
 function mediaForCategory(category) {
   const projectMedia = projectsForCategory(category).flatMap((project) => project.media ?? []);
   const extraMedia = {
-    "self-media": shortVideos,
+    "self-media": selfMediaGroups.flatMap((group) => group.media),
     event: gallery.filter((item) => item.group === "event"),
-    wedding: shortVideos.filter((item) => item.ossObjectKey.includes("南京好享瑷高端婚礼策划有限公司")),
-    portrait: gallery.filter((item) => item.group === "portrait" || item.group === "personal"),
+    wedding: selfMediaGroups.find((group) => group.id === "wedding-short")?.media ?? [],
+    portrait: photographyWall,
   }[category] ?? [];
 
   return uniqueMedia([...projectMedia, ...extraMedia]);
@@ -825,6 +946,30 @@ function openCategoryPage(categoryId) {
   const categoryMedia = mediaForCategory(categoryId);
   const videoCount = categoryMedia.filter((item) => item.type === "video").length;
   const imageCount = categoryMedia.filter((item) => item.type === "image").length;
+  const categoryContent =
+    categoryId === "self-media"
+      ? `
+        <div class="self-media-group-grid">
+          ${selfMediaGroups.map(renderSelfMediaGroupCard).join("")}
+        </div>
+      `
+      : categoryId === "portrait"
+        ? `
+          <div class="portrait-photo-wall">
+            ${categoryMedia.map(renderPhotoWallItem).join("")}
+          </div>
+        `
+      : `
+        <div class="category-project-list">
+          ${categoryProjects.map(renderCategoryProjectSummary).join("")}
+        </div>
+        <div class="modal-section">
+          <h3>视频与图片素材</h3>
+          <div class="modal-media category-modal-grid">
+            ${categoryMedia.map(renderMediaItem).join("")}
+          </div>
+        </div>
+      `;
 
   openModal(`
     <div class="modal-title">
@@ -839,17 +984,23 @@ function openCategoryPage(categoryId) {
       </div>
     </div>
     <div class="category-page-layout">
-      <div class="category-project-list">
-        ${categoryProjects.map(renderCategoryProjectSummary).join("")}
-      </div>
-      <div class="modal-section">
-        <h3>视频与图片素材</h3>
-        <div class="modal-media category-modal-grid">
-          ${categoryMedia.map(renderMediaItem).join("")}
-        </div>
-      </div>
+      ${categoryContent}
     </div>
   `);
+
+  if (categoryId === "self-media") {
+    modalBody.querySelectorAll("[data-self-media-group]").forEach((card) => {
+      bindCardActivation(card, () => openSelfMediaGroup(card.dataset.selfMediaGroup));
+    });
+    setupPreviewPlayback(modalBody);
+  }
+
+  if (categoryId === "portrait") {
+    currentGallery = categoryMedia;
+    modalBody.querySelectorAll("[data-photo-index]").forEach((card) => {
+      bindCardActivation(card, () => openLightbox(Number(card.dataset.photoIndex)));
+    });
+  }
 }
 
 function renderCategoryProjectSummary(project) {
@@ -863,6 +1014,56 @@ function renderCategoryProjectSummary(project) {
       </div>
     </article>
   `;
+}
+
+function renderSelfMediaGroupCard(group) {
+  const previewMedia = group.media[0];
+  const videoCount = group.media.filter((item) => item.type === "video").length;
+
+  return `
+    <article class="work-card category-card self-media-group-card" role="button" tabindex="0" data-self-media-group="${group.id}">
+      <span class="work-media">
+        <span class="category-preview-single">
+          ${renderCategoryPreviewTile(previewMedia) || `<span class="visual-placeholder">${escapeHtml(group.title)}</span>`}
+        </span>
+      </span>
+      <span class="work-content">
+        <span class="work-category">
+          <span>短视频</span>
+          <span>${group.media.length} MEDIA</span>
+        </span>
+        <h3>${escapeHtml(group.title)}</h3>
+        <p>${escapeHtml(group.summary)}</p>
+        <span class="mini-metrics">
+          <span>${videoCount} 支视频</span>
+        </span>
+      </span>
+    </article>
+  `;
+}
+
+function renderPhotoWallItem(item, index) {
+  return `
+    <article class="photo-wall-item" role="button" tabindex="0" data-photo-index="${index}">
+      <img src="${item.ossUrl}" alt="${escapeHtml(item.title)}" loading="lazy" />
+    </article>
+  `;
+}
+
+function openSelfMediaGroup(groupId) {
+  const group = selfMediaGroups.find((item) => item.id === groupId);
+  if (!group) return;
+
+  openModal(`
+    <div class="modal-title">
+      <p class="eyebrow">SELF MEDIA / ${group.media.length} VIDEOS</p>
+      <h2 id="modal-title">${escapeHtml(group.title)}</h2>
+      <p>${escapeHtml(group.summary)}</p>
+    </div>
+    <div class="modal-media short-video-wall">
+      ${group.media.map(renderMediaItem).join("")}
+    </div>
+  `);
 }
 
 function bindCardActivation(element, callback) {

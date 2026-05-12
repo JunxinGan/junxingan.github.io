@@ -417,6 +417,44 @@ const shortVideos = [
   asset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/抖音制作/个人账号/视频案例/日常更新.mp4", "阿甘有车了日常更新", "video", "portrait"),
 ];
 
+const portfolioCategoryPages = [
+  {
+    id: "self-media",
+    title: "自媒体",
+    summary: "账号短视频、个人账号爆款、婚礼 IP 和垂直领域内容。",
+  },
+  {
+    id: "short-drama",
+    title: "短剧",
+    summary: "短剧制片统筹、现场执行、摄影和后期剪辑。",
+  },
+  {
+    id: "event",
+    title: "活动",
+    summary: "复古市集策划执行、现场拍摄、活动照片和活动成片。",
+  },
+  {
+    id: "wedding",
+    title: "婚礼",
+    summary: "婚礼执行、婚礼快剪、婚礼自媒体和老板 IP 内容。",
+  },
+  {
+    id: "food",
+    title: "探店",
+    summary: "建行生活美食探店，覆盖脚本、拍摄和剪辑交付。",
+  },
+  {
+    id: "graduation",
+    title: "毕业季",
+    summary: "幼儿园和班级毕业季活动记录、人物素材和成片交付。",
+  },
+  {
+    id: "portrait",
+    title: "写真",
+    summary: "个人照片、人像写真、生活方式照片和后期选片。",
+  },
+];
+
 function setInitialAssets() {
   document.querySelectorAll("[data-oss-key]").forEach((node) => {
     const key = node.getAttribute("data-oss-key");
@@ -429,66 +467,137 @@ function setInitialAssets() {
   document.head.appendChild(ogImage);
 }
 
-function renderProjectFilters() {
-  const filters = document.querySelector("#project-filters");
-  const categories = ["all", "short-drama", "event", "self-media", "wedding", "food", "portrait", "graduation"];
-
-  filters.innerHTML = categories
-    .map(
-      (category, index) => `
-        <button class="filter-button ${index === 0 ? "is-active" : ""}" type="button" data-project-filter="${category}" aria-pressed="${index === 0}">
-          ${categoryLabels[category]}
-        </button>
-      `,
-    )
-    .join("");
-
-  filters.addEventListener("click", (event) => {
-    const button = event.target.closest("[data-project-filter]");
-    if (!button) return;
-    filters.querySelectorAll(".filter-button").forEach((item) => {
-      item.classList.toggle("is-active", item === button);
-      item.setAttribute("aria-pressed", String(item === button));
-    });
-    renderProjects(button.dataset.projectFilter);
+function uniqueMedia(items) {
+  const seen = new Set();
+  return items.filter((item) => {
+    if (!item || seen.has(item.id)) return false;
+    seen.add(item.id);
+    return true;
   });
 }
 
-function renderProjects(filter = "all") {
+function projectsForCategory(category) {
+  return projects.filter((project) => project.category === category);
+}
+
+function mediaForCategory(category) {
+  const projectMedia = projectsForCategory(category).flatMap((project) => project.media ?? []);
+  const extraMedia = {
+    "self-media": shortVideos,
+    event: gallery.filter((item) => item.group === "event"),
+    wedding: shortVideos.filter((item) => item.ossObjectKey.includes("南京好享瑷高端婚礼策划有限公司")),
+    portrait: gallery.filter((item) => item.group === "portrait" || item.group === "personal"),
+  }[category] ?? [];
+
+  return uniqueMedia([...projectMedia, ...extraMedia]);
+}
+
+function coverForCategory(category) {
+  const categoryProjects = projectsForCategory(category);
+  const media = mediaForCategory(category);
+  return categoryProjects.find((project) => project.cover)?.cover ?? media.find((item) => item.type === "image") ?? media[0] ?? null;
+}
+
+function renderPortfolioCategories() {
+  const jumpBar = document.querySelector("#category-jump-bar");
   const grid = document.querySelector("#works-grid");
-  const visibleProjects = filter === "all" ? projects : projects.filter((project) => project.category === filter);
+  grid.classList.add("category-grid");
 
-  grid.innerHTML = visibleProjects
-    .map((project) => {
-      const cover = project.cover;
-      const previewVideo = project.media.find((item) => item.type === "video");
-      const mediaMarkup = renderPreviewMedia({ cover, previewVideo, title: project.title });
-      const metrics = project.metrics?.map((metric) => `<span>${escapeHtml(metric.value)} ${escapeHtml(metric.label)}</span>`).join("") ?? "";
+  if (jumpBar) {
+    jumpBar.innerHTML = portfolioCategoryPages
+      .map(
+        (category) => `
+          <button class="filter-button" type="button" data-category-page-link="${category.id}">
+            ${escapeHtml(category.title)}
+          </button>
+        `,
+      )
+      .join("");
 
-      return `
-        <article class="work-card reveal" role="button" tabindex="0" data-project-id="${project.id}">
-          <span class="work-media">
-            ${mediaMarkup}
-          </span>
-          <span class="work-content">
-            <span class="work-category">
-              <span>${categoryLabels[project.category]}</span>
-              <span>${project.media.length} MEDIA</span>
-            </span>
-            <h3>${escapeHtml(project.title)}</h3>
-            <p>${escapeHtml(project.summary)}</p>
-            <span class="mini-metrics">${metrics}</span>
-          </span>
-        </article>
-      `;
-    })
+    jumpBar.querySelectorAll("[data-category-page-link]").forEach((button) => {
+      button.addEventListener("click", () => openCategoryPage(button.dataset.categoryPageLink));
+    });
+  }
+
+  grid.innerHTML = portfolioCategoryPages
+    .map((category, index) => renderCategoryCard(category, index))
     .join("");
 
-  grid.querySelectorAll("[data-project-id]").forEach((card) => {
-    bindCardActivation(card, () => openProject(card.dataset.projectId));
+  grid.querySelectorAll("[data-category-page]").forEach((card) => {
+    bindCardActivation(card, () => openCategoryPage(card.dataset.categoryPage));
   });
   setupPreviewPlayback(grid);
   observeReveals(grid);
+}
+
+function renderCategoryCard(category, index) {
+  const categoryProjects = projectsForCategory(category.id);
+  const categoryMedia = mediaForCategory(category.id);
+  const previewMedia = coverForCategory(category.id);
+  const videoCount = categoryMedia.filter((item) => item.type === "video").length;
+  const imageCount = categoryMedia.filter((item) => item.type === "image").length;
+
+  return `
+    <article class="work-card category-card reveal" role="button" tabindex="0" data-category-page="${category.id}">
+      <span class="work-media">
+        <span class="category-preview-single">
+          ${renderCategoryPreviewTile(previewMedia) || `<span class="visual-placeholder">${escapeHtml(category.title)}</span>`}
+        </span>
+      </span>
+      <span class="work-content">
+        <span class="work-category">
+          <span>${String(index + 1).padStart(2, "0")}</span>
+          <span>${categoryMedia.length} MEDIA</span>
+        </span>
+        <h3>${escapeHtml(category.title)}</h3>
+        <p>${escapeHtml(category.summary)}</p>
+        <span class="mini-metrics">
+          <span>${categoryProjects.length} 项项目</span>
+          <span>${videoCount} 支视频</span>
+          <span>${imageCount} 张图片</span>
+        </span>
+      </span>
+    </article>
+  `;
+}
+
+function renderCategoryPreviewTile(item) {
+  if (!item) return "";
+  if (item.type === "image") {
+    return `<span class="category-preview-tile"><img src="${item.ossUrl}" alt="${escapeHtml(item.title)}" loading="lazy" /></span>`;
+  }
+  if (item.type === "video") {
+    return `
+      <span class="category-preview-tile">
+        <video class="preview-video" src="${item.ossUrl}#t=0.1" muted playsinline preload="metadata" aria-label="${escapeHtml(item.title)}"></video>
+      </span>
+    `;
+  }
+  return `<span class="category-preview-tile category-preview-file">${escapeHtml(item.title)}</span>`;
+}
+
+function renderProjectCard(project) {
+  const cover = project.cover;
+  const previewVideo = project.media.find((item) => item.type === "video");
+  const mediaMarkup = renderPreviewMedia({ cover, previewVideo, title: project.title });
+  const metrics = project.metrics?.map((metric) => `<span>${escapeHtml(metric.value)} ${escapeHtml(metric.label)}</span>`).join("") ?? "";
+
+  return `
+    <article class="work-card reveal" role="button" tabindex="0" data-project-id="${project.id}">
+      <span class="work-media">
+        ${mediaMarkup}
+      </span>
+      <span class="work-content">
+        <span class="work-category">
+          <span>${categoryLabels[project.category]}</span>
+          <span>${project.media.length} MEDIA</span>
+        </span>
+        <h3>${escapeHtml(project.title)}</h3>
+        <p>${escapeHtml(project.summary)}</p>
+        <span class="mini-metrics">${metrics}</span>
+      </span>
+    </article>
+  `;
 }
 
 function renderPreviewMedia({ cover, previewVideo, title }) {
@@ -567,6 +676,7 @@ function renderCases() {
 
 function renderGalleryFilters() {
   const filters = document.querySelector("#gallery-filters");
+  if (!filters) return;
   const groups = ["all", "portrait", "event", "personal", "cafe"];
 
   filters.innerHTML = groups
@@ -595,6 +705,7 @@ let currentLightboxIndex = 0;
 
 function renderGallery(filter = "all") {
   const wall = document.querySelector("#photo-wall");
+  if (!wall) return;
   currentGallery = filter === "all" ? gallery : gallery.filter((item) => item.group === filter);
   wall.innerHTML = currentGallery
     .map(
@@ -625,6 +736,7 @@ function renderGallery(filter = "all") {
 
 function renderShorts() {
   const grid = document.querySelector("#shorts-grid");
+  if (!grid) return;
   grid.innerHTML = shortVideos
     .map(
       (video, index) => `
@@ -653,6 +765,104 @@ function renderShorts() {
     bindCardActivation(button, () => openShort(Number(button.dataset.shortIndex)));
   });
   setupPreviewPlayback(grid);
+}
+
+function openGalleryCollection() {
+  const groupSummary = gallery.reduce((summary, item) => {
+    summary[item.group] = (summary[item.group] ?? 0) + 1;
+    return summary;
+  }, {});
+  currentGallery = gallery;
+
+  openModal(`
+    <div class="modal-title">
+      <p class="eyebrow">PHOTOGRAPHY / ${gallery.length} IMAGES</p>
+      <h2 id="modal-title">摄影作品墙</h2>
+      <p>个人照片、写真作品、活动照片和生活方式照片。</p>
+      <div class="collection-summary">
+        ${Object.entries(groupSummary)
+          .map(([group, count]) => `<span>${escapeHtml(galleryLabels[group])} ${count}</span>`)
+          .join("")}
+      </div>
+    </div>
+    <div class="modal-media collection-modal-grid">
+      ${gallery.map(renderMediaItem).join("")}
+    </div>
+  `);
+}
+
+function openShortsCollection() {
+  const portraitCount = shortVideos.filter((video) => video.orientation === "portrait").length;
+  const landscapeCount = shortVideos.length - portraitCount;
+
+  openModal(`
+    <div class="modal-title">
+      <p class="eyebrow">VERTICAL VIDEO / ${shortVideos.length} VIDEOS</p>
+      <h2 id="modal-title">短视频与账号内容</h2>
+      <p>纹发账号、摄影账号、婚礼账号和活动账号案例。</p>
+      <div class="collection-summary">
+        <span>竖屏 ${portraitCount}</span>
+        <span>横屏 ${landscapeCount}</span>
+        <span>全部可播放</span>
+      </div>
+    </div>
+    <div class="modal-media collection-modal-grid">
+      ${shortVideos.map(renderMediaItem).join("")}
+    </div>
+  `);
+}
+
+function openCollection(collectionId) {
+  if (collectionId === "gallery") openGalleryCollection();
+  if (collectionId === "shorts") openShortsCollection();
+}
+
+function openCategoryPage(categoryId) {
+  const category = portfolioCategoryPages.find((item) => item.id === categoryId);
+  if (!category) return;
+
+  const categoryProjects = projectsForCategory(categoryId);
+  const categoryMedia = mediaForCategory(categoryId);
+  const videoCount = categoryMedia.filter((item) => item.type === "video").length;
+  const imageCount = categoryMedia.filter((item) => item.type === "image").length;
+
+  openModal(`
+    <div class="modal-title">
+      <p class="eyebrow">PORTFOLIO / ${escapeHtml(category.title)}</p>
+      <h2 id="modal-title">${escapeHtml(category.title)}</h2>
+      <p>${escapeHtml(category.summary)}</p>
+      <div class="collection-summary">
+        <span>${categoryProjects.length} 项项目</span>
+        <span>${videoCount} 支视频</span>
+        <span>${imageCount} 张图片</span>
+        <span>${categoryMedia.length} 个素材</span>
+      </div>
+    </div>
+    <div class="category-page-layout">
+      <div class="category-project-list">
+        ${categoryProjects.map(renderCategoryProjectSummary).join("")}
+      </div>
+      <div class="modal-section">
+        <h3>视频与图片素材</h3>
+        <div class="modal-media category-modal-grid">
+          ${categoryMedia.map(renderMediaItem).join("")}
+        </div>
+      </div>
+    </div>
+  `);
+}
+
+function renderCategoryProjectSummary(project) {
+  return `
+    <article class="category-project-summary">
+      <p class="eyebrow">${escapeHtml(project.company ?? "个人项目")} / ${escapeHtml(project.period ?? "")}</p>
+      <h3>${escapeHtml(project.title)}</h3>
+      <p>${escapeHtml(project.summary)}</p>
+      <div class="mini-metrics">
+        ${(project.metrics ?? []).map((metric) => `<span>${escapeHtml(metric.value)} ${escapeHtml(metric.label)}</span>`).join("")}
+      </div>
+    </article>
+  `;
 }
 
 function bindCardActivation(element, callback) {
@@ -958,13 +1168,9 @@ function setupBrokenMediaFallback() {
 
 function init() {
   setInitialAssets();
-  renderProjectFilters();
-  renderProjects();
+  renderPortfolioCategories();
   renderTimeline();
   renderCases();
-  renderGalleryFilters();
-  renderGallery();
-  renderShorts();
   setupNavigation();
   setupReveals();
   setupCopy();

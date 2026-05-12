@@ -659,7 +659,7 @@ function renderCategoryCard(category, index) {
   const imageCount = categoryMedia.filter((item) => item.type === "image").length;
 
   return `
-    <article class="work-card category-card reveal" role="button" tabindex="0" data-category-page="${category.id}">
+    <article class="work-card category-card category-${category.id} reveal" role="button" tabindex="0" data-category-page="${category.id}">
       <span class="work-media">
         <span class="category-preview-single">
           ${renderCategoryPreviewTile(previewMedia) || `<span class="visual-placeholder">${escapeHtml(category.title)}</span>`}
@@ -1061,7 +1061,7 @@ function openSelfMediaGroup(groupId) {
       <p>${escapeHtml(group.summary)}</p>
     </div>
     <div class="modal-media short-video-wall">
-      ${group.media.map(renderMediaItem).join("")}
+      ${group.media.map((item) => renderMediaItem({ ...item, orientation: "portrait" })).join("")}
     </div>
   `);
 }

@@ -1625,6 +1625,16 @@ button {
   min-height: 0;
 }
 
+.category-self-media .category-preview-tile,
+.self-media-group-card .category-preview-tile {
+  background: #000;
+}
+
+.category-self-media .category-preview-tile video,
+.self-media-group-card .category-preview-tile video {
+  object-fit: contain;
+}
+
 .self-media-group-grid .work-card,
 .self-media-group-grid .work-card:nth-child(1),
 .self-media-group-grid .work-card:nth-child(5) {
@@ -1651,15 +1661,21 @@ button {
 }
 
 .modal-media.short-video-wall {
-  grid-template-columns: repeat(auto-fill, minmax(128px, 158px));
+  grid-template-columns: repeat(auto-fill, minmax(126px, 150px));
   align-items: start;
   justify-content: start;
   gap: var(--space-3);
 }
 
+.modal-media.short-video-wall .media-item {
+  width: 100%;
+  max-width: 150px;
+}
+
 .modal-media.short-video-wall .media-item video {
-  max-height: 280px;
-  object-fit: cover;
+  aspect-ratio: 9 / 16;
+  max-height: 266px;
+  object-fit: contain;
 }
 
 .modal-media.short-video-wall .asset-label {
@@ -2018,7 +2034,7 @@ button {
   }
 
   .modal-media.short-video-wall {
-    grid-template-columns: repeat(auto-fill, minmax(128px, 158px));
+    grid-template-columns: repeat(auto-fill, minmax(126px, 150px));
   }
 }
 
@@ -2099,12 +2115,12 @@ button {
   }
 
   .self-media-group-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-2);
   }
 
   .modal-media.short-video-wall .media-item video {
-    max-height: 260px;
+    max-height: 252px;
   }
 
   .material-entry-grid,

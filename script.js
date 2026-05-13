@@ -492,6 +492,11 @@ const shortVideos = [
   asset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/抖音制作/个人账号/视频案例/日常更新.mp4", "阿甘有车了日常更新", "video", "portrait"),
 ];
 
+const activityAccountScreenshots = [
+  asset("Agan/个人简历/工作经历/自媒体账号/活动账号/抖音截图/浩棋.png", "浩棋活动账号截图", "image", "portrait"),
+  asset("Agan/个人简历/工作经历/自媒体账号/活动账号/抖音截图/浩棋复古游园会.png", "浩棋复古游园会账号截图", "image", "portrait"),
+];
+
 const selfMediaGroups = [
   {
     id: "wedding-short",
@@ -527,6 +532,18 @@ const selfMediaGroups = [
       asset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/抖音制作/个人账号/视频案例/日常更新.mp4", "阿甘有车了", "video", "portrait"),
       asset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/抖音制作/其余账号/视频案例/活动宣传1.mp4", "TZY 1", "video", "portrait"),
       asset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/抖音制作/其余账号/视频案例/日常拍摄.m4v", "TZY 2", "video", "portrait"),
+      asset("Agan/个人简历/工作经历/自媒体账号/机车账号/抖音截图/tzy.png", "TZY 账号截图 01", "image", "portrait"),
+      asset("Agan/个人简历/工作经历/自媒体账号/机车账号/抖音截图/tzy2.png", "TZY 账号截图 02", "image", "portrait"),
+      asset("Agan/个人简历/工作经历/自媒体账号/机车账号/抖音截图/阿甘有车了.png", "阿甘有车了账号截图 01", "image", "portrait"),
+      asset("Agan/个人简历/工作经历/自媒体账号/机车账号/抖音截图/阿甘有车了2.png", "阿甘有车了账号截图 02", "image", "portrait"),
+    ],
+  },
+  {
+    id: "barber-short",
+    title: "理发短视频",
+    summary: "理发账号短视频内容。",
+    media: [
+      asset("Agan/个人简历/工作经历/自媒体账号/理发账号/视频案例/理发.mp4", "理发短视频", "video", "portrait"),
     ],
   },
   {
@@ -603,10 +620,10 @@ function projectsForCategory(category) {
 function mediaForCategory(category) {
   const projectMedia = projectsForCategory(category).flatMap((project) => project.media ?? []);
   if (category === "wedding") return projectMedia.slice(0, 1);
+  if (category === "event") return uniqueMedia([...projectMedia.slice(0, 2), ...activityAccountScreenshots]);
 
   const extraMedia = {
     "self-media": selfMediaGroups.flatMap((group) => group.media),
-    event: gallery.filter((item) => item.group === "event"),
     portrait: photographyWall,
   }[category] ?? [];
 

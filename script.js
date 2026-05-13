@@ -602,10 +602,11 @@ function projectsForCategory(category) {
 
 function mediaForCategory(category) {
   const projectMedia = projectsForCategory(category).flatMap((project) => project.media ?? []);
+  if (category === "wedding") return projectMedia.slice(0, 1);
+
   const extraMedia = {
     "self-media": selfMediaGroups.flatMap((group) => group.media),
     event: gallery.filter((item) => item.group === "event"),
-    wedding: selfMediaGroups.find((group) => group.id === "wedding-short")?.media ?? [],
     portrait: photographyWall,
   }[category] ?? [];
 

@@ -469,8 +469,8 @@ const additionalPhotography = [
 ];
 
 const photographyWall = uniqueMedia([
-  ...gallery.filter((item) => item.type === "image" && item.group !== "personal"),
-  ...additionalPhotography,
+  ...gallery.filter((item) => item.type === "image" && item.group === "portrait"),
+  ...additionalPhotography.filter((item) => item.group === "portrait"),
 ]);
 
 const shortVideos = [
@@ -517,8 +517,6 @@ const selfMediaGroups = [
     summary: "活动宣传、账号日常和现场内容发布素材。",
     media: [
       asset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/抖音制作/其余账号/视频案例/活动宣传.m4v", "活动宣传", "video", "portrait"),
-      asset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/抖音制作/其余账号/视频案例/活动宣传1.mp4", "活动宣传 1", "video", "portrait"),
-      asset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/抖音制作/其余账号/视频案例/日常拍摄.m4v", "日常拍摄", "video", "portrait"),
     ],
   },
   {
@@ -526,8 +524,9 @@ const selfMediaGroups = [
     title: "机车短视频",
     summary: "个人账号“阿甘有车了”短视频内容。",
     media: [
-      asset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/抖音制作/个人账号/视频案例/日常更新.mp4", "阿甘有车了日常更新", "video", "portrait"),
-      asset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/活动视频/浩棋游园会2.mp4", "浩棋游园会竖版", "video", "portrait"),
+      asset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/抖音制作/个人账号/视频案例/日常更新.mp4", "阿甘有车了", "video", "portrait"),
+      asset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/抖音制作/其余账号/视频案例/活动宣传1.mp4", "TZY 1", "video", "portrait"),
+      asset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/抖音制作/其余账号/视频案例/日常拍摄.m4v", "TZY 2", "video", "portrait"),
     ],
   },
   {

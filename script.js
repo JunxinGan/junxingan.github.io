@@ -125,6 +125,8 @@ const projects = [
     media: [
       asset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/活动视频/廉平成片.mp4", "廉平成片", "video", "landscape"),
       asset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/活动视频/浩棋游园会.mp4", "浩棋游园会", "video", "landscape"),
+      asset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/活动视频/浩棋游园会2.mp4", "浩棋游园会 2", "video", "landscape"),
+      asset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/活动视频/赛肯特快闪.mp4", "赛肯特快闪", "video", "landscape"),
       asset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/活动照片/廉平/微信图片_20260509012544_258_194.jpg", "廉平活动现场", "image", "landscape"),
       asset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/抖音制作/个人账号/抖音截图/阿甘有车了.png", "个人账号截图", "image", "portrait"),
     ],
@@ -522,6 +524,7 @@ const selfMediaGroups = [
     summary: "活动宣传、账号日常和现场内容发布素材。",
     media: [
       asset("Agan/个人简历/工作经历/天津浩棋文化有限公司/照片视频案例/抖音制作/其余账号/视频案例/活动宣传.m4v", "活动宣传", "video", "portrait"),
+      ...activityAccountScreenshots,
     ],
   },
   {
@@ -620,7 +623,7 @@ function projectsForCategory(category) {
 function mediaForCategory(category) {
   const projectMedia = projectsForCategory(category).flatMap((project) => project.media ?? []);
   if (category === "wedding") return projectMedia.slice(0, 1);
-  if (category === "event") return uniqueMedia([...projectMedia.slice(0, 2), ...activityAccountScreenshots]);
+  if (category === "event") return projectMedia.filter((item) => item.type === "video");
 
   const extraMedia = {
     "self-media": selfMediaGroups.flatMap((group) => group.media),
